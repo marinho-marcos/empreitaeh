@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpreitAEH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <head>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="./main.html"><img src="https://png.pngtree.com/png-vector/20220927/ourmid/pngtree-property-and-construction-logo-design-house-icon-abstract-vector-png-image_39370170.png" alt="logo empreitaeh" width="120" style="margin: -30px;">EmpreitAEH</a>
+              
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="./obras.html">Obras</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">Clientes</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+    </head>
+    
+    <main lass="flex-grow-1">
+        <!-- Barra de pesquisa de clientes -->
+        <div class="container">
+            <div class="d-flex align-items-center gap-2">
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Nome:</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroCliente">+</button>
+            </div>
+
+            <!--Tabela de clientes-->
+            <table class="table table-hover mt-4" id="tabelaClientes">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">CPF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="cadastroCliente" tabindex="-1" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cadastroModalLabel">Cadastrar Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cpf" class="form-label">CPF</label>
+                                <input type="text" class="form-control" id="cpf" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo da empresa -->
+                <div class="col-md-4 text-center text-md-start">
+                    <img src="https://png.pngtree.com/png-vector/20220927/ourmid/pngtree-property-and-construction-logo-design-house-icon-abstract-vector-png-image_39370170.png" alt="EmpreitAEH" width="190">
+                </div>
+    
+                <!-- Informações de Contato -->
+                <div class="col-md-4 text-center">
+                    <h5>Contato</h5>
+                    <p><i class="bi bi-telephone-fill"></i> (83) 99999-9999</p>
+                    <p><i class="bi bi-envelope-at-fill"></i></i> contato@empreitaeh.com</p>
+                    <p><i class="bi bi-geo-alt-fill"></i> João Pessoa - PB</p>
+                </div>
+    
+                <!-- Fale Conosco -->
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Fale Conosco</h5>
+                    <p>Tem dúvidas? Entre em contato conosco!</p>
+                    <a href="#" class="btn btn-primary">Enviar Mensagem</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--js.index-->
+    <script src="./src/js/index.js"></script>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
