@@ -14,15 +14,12 @@ let obras = [
         cliente: 'Pedro',
         logradouro: 'Dom Pedro II',
         bairro: 'centro',
-        cidade: 'João pessoa',
+        cidade: 'João Pessoa',
         estado: 'PB'
-    },
-    
+    }
 ];
 
-
 document.addEventListener("DOMContentLoaded", () => {
-    // Verifica se já existe algo salvo no localStorage
     if (!localStorage.getItem("obras")) {
         localStorage.setItem("obras", JSON.stringify(obras));
     }
@@ -30,27 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
     atualizarTabela(); // Preenche a tabela ao carregar a página
 });
 
+// Captura o formulário
+const form = document.getElementById("formCadastro");
 
+form.addEventListener("submit", (event) => {
+    event.preventDefault(); // Impede o recarregamento da página
 
-// Captura o clique no botão de cadastro
-const btnCadastro = document.getElementById("btnCadastro");
-btnCadastro.addEventListener("click", () => {
-    // Captura os valores dos inputs
-    const tipo = document.getElementById("tipo").value;
-    const cliente = document.getElementById("cliente").value;
-    const logradouro = document.getElementById("logradouro").value;
-    const bairro = document.getElementById("bairro").value;
-    const cidade = document.getElementById("cidade").value;
-    const estado = document.getElementById("estado").value;
+    // Usa FormData para capturar os valores do formulário
+    const formData = new FormData(form);
+    
+    // Transforma FormData em objeto simples
+    const novaObra = Object.fromEntries(formData.entries());
 
     // Validação simples
-    if (!tipo || !cliente || !logradouro || !bairro || !cidade || !estado) {
+    if (Object.values(novaObra).some(valor => !valor.trim())) {
         alert('Por favor, preencha todos os campos!');
         return;
     }
-
-    // Cria um novo objeto com os dados
-    const novaObra = { tipo, cliente, logradouro, bairro, cidade, estado };
 
     // Recupera os dados do localStorage
     let obrasSalvas = JSON.parse(localStorage.getItem("obras")) || [];
@@ -58,16 +51,24 @@ btnCadastro.addEventListener("click", () => {
     // Adiciona o novo objeto ao array
     obrasSalvas.push(novaObra);
 
-    // Salva de volta no localStorage
+    // Salva no localStorage
     localStorage.setItem("obras", JSON.stringify(obrasSalvas));
 
     // Atualiza a tabela
     atualizarTabela();
 
-    // Limpa os campos do modal
-    document.querySelector("form").reset();
+    // Limpa os campos do formulário
+    form.reset();
 
-    // Fecha o modal
+    // Fecha o modal (Bootstrap 5)
     const modal = bootstrap.Modal.getInstance(document.getElementById("cadastroObra"));
     modal.hide();
+
+    Toastify({
+
+        text: "Obra adicionada com sucesso!",
+        
+        duration: 4000
+        
+    }).showToast();
 });
