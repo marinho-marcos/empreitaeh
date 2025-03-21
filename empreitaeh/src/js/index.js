@@ -1,3 +1,5 @@
+import { carregarClientes } from "./funcoes.js";
+
 let clientes = [
     {
         nome: 'João',
@@ -11,67 +13,59 @@ let clientes = [
     },
 ];
 
-let clientesTable = document.querySelector("#tabelaClientes tbody");
-let aux = 1;
+document.addEventListener("DOMContentLoaded", () => {
+    if (!localStorage.getItem("clientes")) {
+        localStorage.setItem("clientes", JSON.stringify(clientes));
+    }
 
-for (const cliente of clientes) {
-    clientesTable.insertAdjacentHTML('beforeend', 
-    `<tr>
-        <th scope="row">${aux}</th>
-        <td>${cliente.nome}</td>
-        <td>${cliente.email}</td>
-        <td>${cliente.cpf}</td>
-    </tr>`);
-    aux++;
-}
-
-// ADICIONANDO NOVOS CLIENTES
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Adiciona evento ao botão de cadastro
-    document.querySelector('#cadastroCliente .btn-primary').addEventListener('click', function() {
-        // Captura os valores dos inputs
-        const nome = document.getElementById('nome').value;
-        const email = document.getElementById('email').value;
-        const cpf = document.getElementById('cpf').value;
-
-        // Validação simples
-        if (!nome || !email || !cpf) {
-            alert('Por favor, preencha todos os campos!');
-            return;
-        }
-
-        // Cria nova linha na tabela
-        const tbody = document.querySelector('#tabelaClientes tbody');
-        const novaLinha = document.createElement('tr');
-        
-        // Calcula o número sequencial
-        const numeroLinha = tbody.childElementCount + 1;
-
-        novaLinha.innerHTML = `
-            <th scope="row">${numeroLinha}</td>
-            <td>${nome}</td>
-            <td>${email}</td>
-            <td>${cpf}</td>
-        `;
-
-        // Adiciona a linha à tabela
-        tbody.appendChild(novaLinha);
-
-        // Limpa o formulário
-        document.getElementById('nome').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('cpf').value = '';
-
-        // Fecha o modal usando Bootstrap
-        const modal = bootstrap.Modal.getInstance(document.getElementById('cadastroCliente'));
-        if (modal) {
-            modal.hide();
-        } else {
-            new bootstrap.Modal(document.getElementById('cadastroCliente')).hide();
-        }
-    });
+    carregarClientes(); // Preenche a tabela ao carregar a página
 });
+
+
+// Captura o formulário
+const formCliente = document.getElementById("formCadastroCliente");
+
+formCliente.addEventListener("submit", (event) => {
+    event.preventDefault(); // Impede o recarregamento da página
+
+    // Usa FormData para capturar os valores do formulário
+    const formData = new FormData(formCliente);
+    
+    // Transforma FormData em um objeto simples
+    const novoCliente = Object.fromEntries(formData.entries());
+
+    // Validação simples
+    if (Object.values(novoCliente).some(valor => !valor.trim())) {
+        alert('Por favor, preencha todos os campos!');
+        return;
+    }
+
+    // Recupera os dados do localStorage
+    let clientesSalvos = JSON.parse(localStorage.getItem("clientes")) || [];
+    
+    // Adiciona o novo cliente ao array
+    clientesSalvos.push(novoCliente);
+
+    // Salva no localStorage
+    localStorage.setItem("clientes", JSON.stringify(clientesSalvos));
+
+    // Atualiza a tabela
+    carregarClientes();
+
+    // Limpa os campos do formulário
+    formCliente.reset();
+
+    // Fecha o modal (Bootstrap 5)
+    const modal = bootstrap.Modal.getInstance(document.getElementById("cadastroCliente"));
+    modal.hide();
+
+    // Exibe uma notificação de sucesso
+    Toastify({
+        text: "Cliente adicionado com sucesso!",
+        duration: 4000
+    }).showToast();
+});
+
 
 
 // PESQUISA DE CLIENTES
